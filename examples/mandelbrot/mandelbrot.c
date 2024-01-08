@@ -20,15 +20,6 @@ bool converge(gsl_complex c, double eps, uint64_t iterations) {
     return (i == iterations);
 }
 
-
-void update_iterations(uint64_t* iterations, double cpu_time_used, double reference) {
-  if (cpu_time_used > reference) {
-    *iterations -= 1;
-  } else {
-    *iterations += 1;
-  }
-}
-
 void mandelbrot(lua_State* L) {
   gsl_complex c;
   double min_x = -2;
@@ -57,18 +48,15 @@ void mandelbrot(lua_State* L) {
     max_y *= (1.0 - 0.001);
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    update_controller(L, cpu_time_used);
-    iterations = get_u(L);
+    loopa_send_sensor(L, cpu_time_used);
+    iterations = loopa_recv_actuator(L);
     // printf("used: %f, iterations: %ld\n", cpu_time_used, iterations);
   }
 }
 
 int main(void) {
-  lua_State* L = luaL_newstate();
-  init_lua(L, "controller.lua");
-
+  lua_State* L = loopa_init("controller.lua");
   mandelbrot(L);
-
-  lua_close(L);
+  loopa_close(L);
   return 0;
 }

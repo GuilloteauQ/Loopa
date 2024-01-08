@@ -27,13 +27,21 @@ loopa_close(L);
 
 4. Define your controller in Lua
 
-The class **must be named** `Controller` and **must implement** at least the following methods:
+The Lua class is expected to be named `Controller`, but this can be overloaded with the `LOOPA_CLASS_NAME` macro.
+
+```c
+#define LOOPA_CLASS_NAME "MyControllerClass"
+//...
+#include "loopa.h"
+```
+
+The class **must implement** at least the following methods:
 
 - `Controller:init()`: initialize the controller
 
 - `Controller:recv_sensor(sensor)`: receive the new sensor value and update the inner state of the controller
 
-- `Controller:send_actuator()`: returns the new value of the actuator
+- `Controller:send_actuator()`: return the new value of the actuator
 
 Here is an example for a PI Controller:
 
@@ -69,7 +77,7 @@ For example:
 // ...
 cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 loopa_send_sensor(L, cpu_time_used);
-iterations = loopa_get_actuator(L);
+iterations = loopa_recv_actuator(L);
 // ...
 ```
 
