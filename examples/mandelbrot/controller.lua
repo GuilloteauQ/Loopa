@@ -8,7 +8,7 @@ function Controller:init()
   return ret
 end
 
-function Controller:update(sensor)
+function Controller:recv_sensor(sensor)
   local error = self.ref - sensor
   self.cumerror = self.cumerror + error
   self.u = self.kp * error + self.ki * self.cumerror
@@ -18,6 +18,6 @@ function Controller:update(sensor)
   end
 end
 
-function Controller:get_u()
+function Controller:send_actuator()
   return math.floor(self.u)
 end

@@ -8,7 +8,7 @@
 #define LOOPA_IMPLEMENTATION
 #define LOOPA_ACTUATOR_TYPE uint64_t
 #define LOOPA_SENSOR_TYPE double
-#include "loopa.h"
+#include "../../loopa.h"
 
 bool converge(gsl_complex c, double eps, uint64_t iterations) {
     gsl_complex z = gsl_complex_rect(0.0, 0.0);
