@@ -1,6 +1,6 @@
 # Loopa
 
-Header-only library to easily implement feedback loops with Lua
+Header-only library to easily implement feedback loops with Lua in C
 
 ## Usage
 
@@ -81,3 +81,16 @@ iterations = loopa_recv_actuator(L);
 // ...
 ```
 
+## Examples
+
+### `examples/mandelbrot`
+
+This example compute the Mandelbrot set.
+The maximum depth of convergence is controlled with respect to the iteration speed.
+The control loop is executed at the end of each iteration.
+
+### `examples/monte_carlo_pi`
+
+This example computes an estimation of PI via a Monte Carlo simulation.
+The number of concurrent threads is controlled with respect to the `loadavg` of the host machine.
+The control loop is running in another thread.
