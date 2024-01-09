@@ -20,7 +20,7 @@ bool converge(gsl_complex c, double eps, uint64_t iterations) {
     return (i == iterations);
 }
 
-void mandelbrot(lua_State* L) {
+void mandelbrot(loopa_State* L) {
   gsl_complex c;
   double min_x = -2;
   double max_x = 0.5;
@@ -55,7 +55,7 @@ void mandelbrot(lua_State* L) {
 }
 
 int main(void) {
-  lua_State* L = loopa_init("controller.lua");
+  loopa_State* L = loopa_init("controller.lua");
   mandelbrot(L);
   loopa_close(L);
   return 0;

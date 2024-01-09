@@ -21,10 +21,12 @@
 #define LOOPA_CONTROLLER_VAR_NAME "mycontroller"
 #endif // !LOOPA_CONTROLLER_VAR_NAME
 
-lua_State* loopa_init(char* filename);
-void loopa_send_sensor(lua_State* L, LOOPA_SENSOR_TYPE sensor);
-LOOPA_ACTUATOR_TYPE loopa_recv_actuator(lua_State* L);
-void loopa_close(lua_State* L);
+#define loopa_State lua_State
+
+loopa_State* loopa_init(char* filename);
+void loopa_send_sensor(loopa_State* L, LOOPA_SENSOR_TYPE sensor);
+LOOPA_ACTUATOR_TYPE loopa_recv_actuator(loopa_State* L);
+void loopa_close(loopa_State* L);
 
 #endif // LOOPA_H
 
@@ -32,8 +34,8 @@ void loopa_close(lua_State* L);
 
 #ifdef LOOPA_IMPLEMENTATION
 
-lua_State* loopa_init(char* filename) {
-  lua_State* L = luaL_newstate();
+loopa_State* loopa_init(char* filename) {
+  loopa_State* L = luaL_newstate();
   luaL_dofile(L, filename);
   luaL_openlibs(L);
   lua_getglobal(L, LOOPA_CLASS_NAME);
@@ -43,7 +45,7 @@ lua_State* loopa_init(char* filename) {
   return L;
 }
 
-void loopa_send_sensor(lua_State* L, LOOPA_SENSOR_TYPE sensor) {
+void loopa_send_sensor(loopa_State* L, LOOPA_SENSOR_TYPE sensor) {
   lua_getglobal(L, LOOPA_CLASS_NAME);
   lua_getfield(L, -1, "recv_sensor");
   lua_getglobal(L, LOOPA_CONTROLLER_VAR_NAME);
@@ -52,7 +54,7 @@ void loopa_send_sensor(lua_State* L, LOOPA_SENSOR_TYPE sensor) {
   lua_pop(L, 2);
 }
 
-LOOPA_ACTUATOR_TYPE loopa_recv_actuator(lua_State* L) {
+LOOPA_ACTUATOR_TYPE loopa_recv_actuator(loopa_State* L) {
   lua_getglobal(L, LOOPA_CLASS_NAME);
   lua_getfield(L, -1, "send_actuator");
   lua_getglobal(L, LOOPA_CONTROLLER_VAR_NAME);
@@ -62,7 +64,7 @@ LOOPA_ACTUATOR_TYPE loopa_recv_actuator(lua_State* L) {
   return result;
 }
 
-void loopa_close(lua_State* L) {
+void loopa_close(loopa_State* L) {
   lua_close(L);
 }
 

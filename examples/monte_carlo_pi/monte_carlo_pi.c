@@ -67,7 +67,7 @@ void montecarlo(void) {
 }
 
 void* controller_thread() {
-  lua_State* L = loopa_init("controller.lua");
+  loopa_State* L = loopa_init("controller.lua");
 
   LOOPA_ACTUATOR_TYPE loopa_actuator;
   double loadavgs[3];

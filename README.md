@@ -15,10 +15,10 @@ Header-only library to easily implement feedback loops with Lua in C
 // #define LOOPA_SENSOR_TYPE double
 #include "loopa.h"
 ```
-3. Initialize the `Lua_State`
+3. Initialize the `loopa_State`
 
 ```c
-lua_State* L = loopa_init("your_lua_file.lua");
+loopa_State* L = loopa_init("your_lua_file.lua");
 // ...
 function(L);
 // ...
