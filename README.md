@@ -81,6 +81,18 @@ iterations = loopa_recv_actuator(L);
 // ...
 ```
 
+## Features
+
+### Hot reloading of the Lua file
+
+Loopa provides a way to reload the Lua file when a modification occurs.
+
+```c
+void loopa_try_reload(loopa_State* L, char* filename);
+```
+
+for now there is **no** check that the reload is successful or not, so a file saved with an error might crash the main program.
+
 ## Examples
 
 ### `examples/mandelbrot`

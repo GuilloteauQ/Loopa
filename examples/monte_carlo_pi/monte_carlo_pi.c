@@ -83,6 +83,8 @@ void* controller_thread() {
     pthread_mutex_unlock(&mutex_actuator);
 
     sleep(5);
+    loopa_try_reload(L, "controller.lua");
+
   }
 
   loopa_close(L);
